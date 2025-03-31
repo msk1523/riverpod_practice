@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_files/shared/cart_icon.dart';
 import 'package:riverpod_files/providers/products_provider.dart';
+import 'package:riverpod_files/providers/cart_provider.dart';
 
 class HomeScreen extends ConsumerWidget {
   //for stateful widget use ConsumerStatefulWidget
@@ -13,6 +14,7 @@ class HomeScreen extends ConsumerWidget {
     // 'watch' provider data for changes
     //If the data changes, it forces the build mwthod to re-run to make the changes
     final allProduct = ref.watch(productsProvider);
+    final cartProducts = ref.watch(cartNotifierProvider);
 
     return Scaffold(
       appBar: AppBar(
@@ -54,6 +56,11 @@ class HomeScreen extends ConsumerWidget {
                       color: Colors.grey,
                     ),
                   ),
+                  if (cartProducts.contains(allProduct[index]))
+                    TextButton(onPressed: () {}, child: const Text('Remove')),
+                  if (!cartProducts.contains(allProduct[index]))
+                    TextButton(
+                        onPressed: () {}, child: const Text('Add to Cart')),
                 ],
               ),
             );
